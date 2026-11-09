@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Little Dino Sanctuary</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EAF4E6; --ink:#39384A; --muted:#6B6A7C; --paper:#FFFDF7;
+  --triassic:#FFD8C4; --jurassic:#C9EBD3; --cretaceous:#DAD3F6;
+  --butter:#FFF0B3; --sky:#CFE7F3; --line:#39384A;
+  --display:"Fredoka","Trebuchet MS",system-ui,sans-serif;
+  --body:"Nunito",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1.05rem/1.55 var(--body);}
+.wrap{max-width:1040px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+header{display:flex;align-items:center;gap:1.25rem;margin-bottom:2.5rem}
+header .mark{font-size:4rem;line-height:1;background:var(--butter);border:3px solid var(--line);border-radius:60% 40% 55% 45%/50% 55% 45% 50%;width:6.5rem;height:6.5rem;display:grid;place-items:center;flex:none;animation:wobble 1.2s ease-out 1 both}
+@keyframes wobble{0%{transform:rotate(-14deg) scale(.8)}60%{transform:rotate(6deg) scale(1.05)}100%{transform:none}}
+h1{font:600 clamp(2rem,6vw,3.4rem)/1.05 var(--display);margin:0}
+header p{margin:.35rem 0 0;color:var(--muted);max-width:34ch}
+.layout{display:grid;grid-template-columns:minmax(0,320px) minmax(0,1fr);gap:2rem;align-items:start}
+@media(max-width:800px){.layout{grid-template-columns:1fr}}
+h2{font:600 1.5rem/1.2 var(--display);margin:0 0 1rem}
+form{background:var(--paper);border:3px solid var(--line);border-radius:28px;padding:1.5rem;box-shadow:6px 6px 0 var(--sky);position:sticky;top:1rem}
+@media(max-width:800px){form{position:static}}
+label{display:block;font-weight:700;font-size:.95rem;margin:0 0 1rem}
+input,select,textarea{display:block;width:100%;margin-top:.3rem;padding:.6rem .8rem;font:inherit;color:var(--ink);background:#fff;border:2px solid var(--line);border-radius:14px}
+textarea{resize:vertical;min-height:5.5rem}
+:focus-visible{outline:3px solid #7A6FD6;outline-offset:2px}
+button{font:600 1.1rem var(--display);width:100%;padding:.75rem 1rem;color:var(--ink);background:var(--butter);border:3px solid var(--line);border-radius:999px;cursor:pointer;transition:transform .12s,box-shadow .12s;box-shadow:0 4px 0 var(--line)}
+button:hover{transform:translateY(-1px)}
+button:active{transform:translateY(3px);box-shadow:0 1px 0 var(--line)}
+button:disabled{opacity:.6;cursor:wait}
+.msg{min-height:1.4rem;margin:.9rem 0 0;font-weight:700;font-size:.95rem}
+.msg.err{color:#A3304A}.msg.ok{color:#2F7A4B}
+.count{color:var(--muted);font-weight:600;font-size:1rem;margin-left:.4rem}
+#catalog{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:1.25rem;list-style:none;margin:0;padding:0}
+.card{background:var(--tint,var(--paper));border:3px solid var(--line);border-radius:26px 26px 26px 8px;padding:1.2rem 1.2rem 1.3rem;display:flex;flex-direction:column;gap:.6rem}
+.card.Triassic{--tint:var(--triassic)}.card.Jurassic{--tint:var(--jurassic)}.card.Cretaceous{--tint:var(--cretaceous)}
+.card h3{font:600 1.45rem/1.15 var(--display);margin:0}
+.tags{display:flex;gap:.4rem;flex-wrap:wrap}
+.tag{background:var(--paper);border:2px solid var(--line);border-radius:999px;padding:.05rem .65rem;font-weight:700;font-size:.85rem}
+.card p{margin:0}
+.empty{grid-column:1/-1;background:var(--paper);border:3px dashed var(--line);border-radius:26px;padding:2rem;text-align:center}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="mark" aria-hidden="true">🦕</div>
+    <div>
+      <h1>Little Dino Sanctuary</h1>
+      <p>A snug home for every dinosaur you know. Add one and it stays here.</p>
+    </div>
+  </header>
+
+  <div class="layout">
+    <section aria-labelledby="add-h">
+      <form id="dino-form" novalidate>
+        <h2 id="add-h">Welcome a new dino</h2>
+        <label>Name
+          <input name="name" maxlength="80" required placeholder="Triceratops">
+        </label>
+        <label>Era
+          <select name="era" required>
+            <option>Triassic</option><option>Jurassic</option><option selected>Cretaceous</option>
+          </select>
+        </label>
+        <label>Diet
+          <select name="diet" required>
+            <option>Herbivore</option><option>Carnivore</option><option>Omnivore</option>
+          </select>
+        </label>
+        <label>Fun fact
+          <textarea name="fun_fact" maxlength="300" required placeholder="Its frill may have helped it find a mate."></textarea>
+        </label>
+        <button type="submit" id="submit">Add to sanctuary</button>
+        <p class="msg" id="msg" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <section aria-labelledby="cat-h">
+      <h2 id="cat-h">Residents<span class="count" id="count"></span></h2>
+      <ul id="catalog"></ul>
+    </section>
+  </div>
+</div>
+
+<script>
+const $ = (s) => document.querySelector(s);
+const catalog = $('#catalog'), msg = $('#msg'), form = $('#dino-form'), btn = $('#submit');
+const ICON = { Herbivore: '🌿', Carnivore: '🍖', Omnivore: '🍓' };
+
+function say(text, kind) { msg.textContent = text; msg.className = 'msg ' + (kind || ''); }
+function el(tag, cls, text) { const e = document.createElement(tag); if (cls) e.className = cls; if (text) e.textContent = text; return e; }
+
+function render(dinos) {
+  catalog.replaceChildren();
+  $('#count').textContent = dinos.length ? `(${dinos.length})` : '';
+  if (!dinos.length) {
+    const li = el('li', 'empty', 'No residents yet. Add the first dino with the form.');
+    catalog.append(li);
+    return;
+  }
+  for (const d of dinos) {
+    const li = el('li', 'card ' + d.era);
+    const tags = el('div', 'tags');
+    tags.append(el('span', 'tag', d.era), el('span', 'tag', `${ICON[d.diet] || ''} ${d.diet}`));
+    li.append(el('h3', '', d.name), tags, el('p', '', d.fun_fact));
+    catalog.append(li);
+  }
+}
+
+async function load() {
+  try {
+    const res = await fetch('/dinosaurs');
+    if (!res.ok) throw new Error();
+    render(await res.json());
+  } catch {
+    catalog.replaceChildren(el('li', 'empty', 'The catalog could not load. Refresh to try again.'));
+  }
+}
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const body = Object.fromEntries(new FormData(form));
+  btn.disabled = true; say('');
+  try {
+    const res = await fetch('/dinosaurs', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+    const data = await res.json();
+    if (!res.ok) { say(data.error || 'Could not add the dino.', 'err'); return; }
+    form.reset();
+    say(`${data.name} added to the sanctuary.`, 'ok');
+    await load();
+  } catch {
+    say('Could not reach the server. Try again.', 'err');
+  } finally { btn.disabled = false; }
+});
+
+load();
+</script>
+</body>
+</html>
