@@ -97,3 +97,14 @@ curl -i -X POST http://localhost:3000/dinosaurs \
 * **Core Prompts Used:**
   * *"How to resolve PostgreSQL authentication failure after changing password in .env file with Docker Compose?"*
   * *"Formulate a concise paragraph explaining the difference between docker compose down and docker compose down -v on named volumes."*
+
+
+# Statement of Originality
+
+I hereby declare that this project, titled **"Little Dino Sanctuary"** along with its accompanying source code, system design, and technical documentation is my own original work. 
+
+All containerization configurations, database integrations, API implementations, and architectural diagrams presented in this project were designed, built, tested, and verified by me to satisfy all evaluation criteria. Any external libraries, base images, or tools used have been properly acknowledged and integrated in accordance with standard software engineering practices.
+
+**Author:** Clarisse Xaviera Kurniaman
+**Repository:** Clarisse-X/little-dino-sanctuary
+**Date:** November 2026
